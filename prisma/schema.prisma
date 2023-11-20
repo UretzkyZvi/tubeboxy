@@ -1,0 +1,84 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id       String    @id
+  title    String
+  logo     String
+  channels Channel[]
+}
+
+model Channel {
+  id            String       @id
+  title         String
+  logo          String
+  description   String
+  categoryId    String
+  podcastMode   Boolean?     @default(false)
+  category      Category     @relation(fields: [categoryId], references: [id])
+  urls          URL[]
+  chatChannel   ChatChannel? @relation(fields: [chatChannelId], references: [id])
+  chatChannelId String?      @unique
+}
+
+model ChatChannel {
+  id           String       @id @default(uuid())
+  chatThreadId String?      @unique
+  channelId    String?      @unique
+  chatThread   ChatThread?  @relation(fields: [chatThreadId], references: [id])
+  chatMembers  ChatMember[]
+  Channel      Channel?
+}
+
+model ChatThread {
+  id          String       @id
+  chatChannel ChatChannel?
+  members     ChatMember[]
+}
+
+model ChatMember {
+  id            String      @id
+  chatChannelId String
+  chatChannel   ChatChannel @relation(fields: [chatChannelId], references: [id])
+  userId        String
+  userName      String
+  ChatThread    ChatThread? @relation(fields: [chatThreadId], references: [id])
+  chatThreadId  String?
+  User          User        @relation(fields: [userId], references: [id])
+}
+
+model Token {
+  identity        String   @id
+  channelId       String   @unique
+  userAccessToken String
+  tokenExpiresAt  DateTime
+}
+
+model User {
+  id             String       @id @default(uuid())
+  userIdentifier String
+  name           String
+  email          String
+  nickname       String?
+  ChatMembers    ChatMember[]
+}
+
+model URL {
+  id          Int      @id @default(autoincrement())
+  src         String
+  type        String
+  name        String?
+  description String?
+  tags        String[]
+  channelId   String
+  channel     Channel  @relation(fields: [channelId], references: [id])
+}
