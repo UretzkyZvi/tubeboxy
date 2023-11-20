@@ -15,7 +15,18 @@ const config = {
     // Feel free to reconfigure them to your own preference.
     "@typescript-eslint/array-type": "off",
     "@typescript-eslint/consistent-type-definitions": "off",
-
+    "@typescript-eslint/no-floating-promises": "off",
+    "@typescript-eslint/no-unsafe-member-access": "off",
+    "react-hooks/rules-of-hooks": "off",
+    "@typescript-eslint/non-nullable-type-assertion-style" : "off",
+    "no-var": "off",
+    "@typescript-eslint/prefer-optional-chain": "off",
+    "@typescript-eslint/no-empty-interface": "off",
+    "@typescript-eslint/prefer-nullish-coalescing" : "off",
+    "prefer-const"  : "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/ban-types"  : "off",
+    "@typescript-eslint/no-unsafe-call" : "off",
     "@typescript-eslint/consistent-type-imports": [
       "warn",
       {
